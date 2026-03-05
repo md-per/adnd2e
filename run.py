@@ -4,8 +4,8 @@ keys = ['Race:','Gender:','Alignment:','Age:','Height:','Weight:','Stats:\tMetho
 values = []
 for i in range(0,7):
     values += [c.char[i]]
-new_char = dict(zip(keys,values))
-for key, value in new_char.items():
+char = dict(zip(keys,values))
+for key, value in char.items():
     print(f"{key}\n {value}")
 
 import tables.abl_tbl as tbl

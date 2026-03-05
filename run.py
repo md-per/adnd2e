@@ -17,3 +17,4 @@ import tables.ability_score_tables as tbl
 # wis_tbl = tbl.wis_tbl(stats[4])
 # cha_tbl = tbl.cha_tbl(stats[5])
 # tables = [str_tbl,dex_tbl,con_tbl,int_tbl,wis_tbl,cha_tbl]
+

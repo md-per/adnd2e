@@ -32,22 +32,12 @@ adj = race.adjust
 mod_scores = [t + m for t, m in zip(new_scores, adj)]
 # Default to modified (young) scores
 fnl_scores = mod_scores.copy()
-# c) Strength Table
-str_tbl = tbl.str_tbl(fnl_scores[0])
-# d) Dexterity Table
-dex_tbl = tbl.dex_tbl(fnl_scores[1])
-# e) Constitution Table
-con_tbl = tbl.con_tbl(fnl_scores[2])
-# f) Inteligence Table
 
-# g) Wisdom Table
+# c) Racial Abilities
 
-# h) Charisma Table
+# d) Determine Alignment, Gender, Height, Weight, age and aging effects
 
-# i) Racial Abilities
-
-# j) Determine Alignment, Gender, Height, Weight, age and aging effects
-
+# di)
 #   Alignment
 order = ['Lawful','Neutral','Chaotic']
 moral = ['Good','Neutral','Evil']
@@ -58,18 +48,18 @@ if o_idx == 1 and m_idx == 1:
     align = 'True Neutral'
 else:
     align = f'{order[o_idx]} {moral[m_idx]}'
-
+# dii)
 #   Gender
 binary = ['Male','Female']
 sex_idx = rand.randrange(len(binary))
 gender = binary[sex_idx]
-
+# diii)
 #   Height
 height = race.base_ht[sex_idx] + race.mod_ht
-
+# div)
 #   Weight
 weight = race.base_wt[sex_idx] + race.mod_wt
-
+# dv)
 #   Age and Aging Effects
 age = race.base_age + race.mod_age
 #   Maximum Age
@@ -117,11 +107,23 @@ for threshold, stage_scores in life_stages:
     if age >= threshold:
         fnl_scores = stage_scores
         break
-
 scores = tuple(fnl_scores)
+# e) Determin Ability Tables
+#   Strength Table
+str_tbl = tbl.str_tbl(scores[0])
+#   Dexterity Table
+dex_tbl = tbl.dex_tbl(scores[1])
+#   Constitution Table
+con_tbl = tbl.con_tbl(scores[2])
+#   Inteligence Table
+int_tbl = tbl.int_tbl(scores[3])
+#   Wisdom Table
+wis_tbl = tbl.wis_tbl(scores[4])
+#   Charisma Table
+cha_tbl = tbl.cha_tbl(scores[5])
 # Step 3: 
 
 
-char = [race.race,gender,align,f"{age} years",f"{height}'",f"{weight} lbs.",scores,str_tbl,dex_tbl,con_tbl]
+char = [race.race,gender,align,f"{age} years",f"{height}'",f"{weight} lbs.",scores,str_tbl,dex_tbl,con_tbl,int_tbl,wis_tbl,cha_tbl]
 for i in char:
     print(i)

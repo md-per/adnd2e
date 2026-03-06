@@ -45,14 +45,42 @@ def dex_tbl(stat):
     return tuple(i[pos] for i in dexterity)
 
 # Constitution Table
-hp_adj = [-3,-2,-2]+[-1]*3+[0]*8+[1]+[2]*9
+hp_adj          = [-3,-2,-2]+[-1]*3+[0]*8+[1]+[2]*9
 # if pc_class == 'Warrior':
-#     hp_adj = hp_adj[:16]+[3,4,5,5]+[6]*3+[7,7]
-hp_adj = tuple(hp_adj)
-sys_shock = tuple(x/100 for x in tuple(range(25,86,5))+(88,90,95,97)+(99,)*7+(100,))
-res_survive = tuple(x/100 for x in tuple(range(30,91,5))+tuple(range(92,99,2))+(100,)*8)
-psn_save = (-2,-1,)+(0,)*16+(1,1,2,2,3,3,4)
-regen = (0,)*19+tuple(range(6,0,-1))
-constitution = (hp_adj,sys_shock,res_survive,psn_save,regen)
+#     hp_adj    = hp_adj[:16]+[3,4,5,5]+[6]*3+[7,7]
+hp_adj          = tuple(hp_adj)
+sys_shock       = tuple(x/100 for x in tuple(range(25,86,5))+(88,90,95,97)+(99,)*7+(100,))
+res_survive     = tuple(x/100 for x in tuple(range(30,91,5))+tuple(range(92,99,2))+(100,)*8)
+psn_save        = (-2,-1,)+(0,)*16+(1,1,2,2,3,3,4)
+regen           = (0,)*19+tuple(range(6,0,-1))
+constitution    = tuple(zip(hp_adj,sys_shock,res_survive,psn_save,regen))
 def con_tbl(stat):
-    return tuple(i[stat-1] for i in constitution)
+    return constitution[stat]
+
+# Intelligence Table
+numlang         = (0,0,0,0,1,1,1,1,1,2,2,2,3,3,4,4,5,6,7,8,9,10,11,12,15,20)
+spllvl          = (0,0,0,0,0,0,0,0,0,4,5,5,6,6,7,7,8,8,9,9,9,9,9,9,9,9)
+chnc2lrnspll    = (0,0,0,0,0,0,0,0,0,35,40,45,50,55,60,65,70,75,85,95,96,97,98,99,100,100)
+max_spllvl      = (0,0,0,0,0,0,0,0,0,6,7,7,7,9,9,11,11,14,18,99,99,99,99,99,99,99) # 99 = All
+spll_imm_int    = (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7) # 1 = 1st level Illusions
+intelligence    = tuple(zip(numlang,spllvl,chnc2lrnspll,max_spllvl,spll_imm_int))
+def int_tbl(stat):
+    return intelligence[stat]
+
+# Wisdom Table
+mdef_adj        = (0,0,0,-3,-2,-1,-1,-1,0,0,0,0,0,0,0,1,2,3,4,4,4,4,4,4,4,4)
+spellfail       = (0,80,60,50,45,40,35,30,25,20,15,10,5,0,0,0,0,0,0,0,0,0,0,0,0,0)
+# bns_spll stores the total number of bonus slots per level: (1st,2nd,3rd,4th,5th)
+bns_spll        = (0,0,0,0,0,0,0,0,0,0,0,0,0,(1,0,0,0,0),(2,0,0,0,0),(2,1,0,0,0),(2,2,0,0,0),(2,2,1,0,0),(2,2,1,1,0),(3,2,1,1,1),(3,2,1,1,2,0,0),(3,2,1,1,2,1,0),(3,2,1,1,2,2,0),(3,2,1,1,2,2,1),(3,2,1,1,2,2,2),(3,2,1,1,2,2,3))
+spll_imm        = (0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,3,4,5,6,7) # 1 = Immunity to specific charms
+wisdom          = tuple(zip(mdef_adj,spellfail,bns_spll,spll_imm))
+def wis_tbl(stat):
+    return wisdom[stat]
+
+# Charisma Table
+max_hench       = (0,0,0,1,1,2,2,3,3,4,4,4,5,5,6,7,8,10,15,20,25,30,35,40,50,100)
+lyl_base        = (0,0,0,-30,-25,-20,-15,-10,-5,0,0,0,0,5,10,15,20,30,40,50,60,70,80,90,100,150)
+react_adj       = (0,0,0,-25,-20,-15,-10,-5,0,0,0,0,0,5,10,15,25,30,35,40,45,50,55,60,70,100)
+charisma        = tuple(zip(max_hench,lyl_base,react_adj))
+def cha_tbl(stat):
+    return charisma[stat]

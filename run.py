@@ -1,7 +1,7 @@
 import random as rand
 from dice import d
 from races import dwarf, elf, gnome, halfelf, halfling, human
-race = (dwarf, elf, gnome, halfelf, halfling, human)
+RACES = (dwarf, elf, gnome, halfelf, halfling, human)
 from tables import ability_tbls as tbl
 
 # Player Character Generation Flowchart
@@ -20,24 +20,24 @@ new_scores = (method_i())
 # a) Requirements
 #    Validate eligeble races
 valid = [
-    i for i, mod in enumerate(race) 
+    i for i, mod in enumerate(RACES) 
     if all(low <= val <= high for val, (low, high) in zip(new_scores, mod.limits))
 ]
 #    Choosing a Race
 race_idx = rand.choice(valid)
-race = race[race_idx]
+race = RACES[race_idx]
 # b) Adjust Ability Scores
 #    Adjustments    #
 adj = race.adjust
 mod_scores = [t + m for t, m in zip(new_scores, adj)]
-# Storing of base ability scores for future reference
-scores = mod_scores.copy()
+# Default to modified (young) scores
+fnl_scores = mod_scores.copy()
 # c) Strength Table
-str_tbl = tbl.str_tbl(scores[0])
+str_tbl = tbl.str_tbl(fnl_scores[0])
 # d) Dexterity Table
-dex_tbl = tbl.dex_tbl(scores[1])
+dex_tbl = tbl.dex_tbl(fnl_scores[1])
 # e) Constitution Table
-con_tbl = tbl.con_tbl(scores[2])
+con_tbl = tbl.con_tbl(fnl_scores[2])
 # f) Inteligence Table
 
 # g) Wisdom Table
@@ -61,14 +61,14 @@ else:
 
 #   Gender
 binary = ['Male','Female']
-g_idx = rand.randrange(len(binary))
-gender = binary[g_idx]
+sex_idx = rand.randrange(len(binary))
+gender = binary[sex_idx]
 
 #   Height
-height = race.base_ht[g_idx] + race.mod_ht
+height = race.base_ht[sex_idx] + race.mod_ht
 
 #   Weight
-weight = race.base_wt[g_idx] + race.mod_wt
+weight = race.base_wt[sex_idx] + race.mod_wt
 
 #   Age and Aging Effects
 age = race.base_age + race.mod_age
@@ -77,7 +77,7 @@ max_age = race.max_age
 #   Middle Age
 mdl_age = race.mdl_age
 mdl_age_mod = [-1,0,-1,1,1,0]
-mdl_age_scores = scores.copy()
+mdl_age_scores = fnl_scores.copy()
 for i in range(0,6):
     if i == 4:
         mdl_age_scores[i] += mdl_age_mod[i]
@@ -100,7 +100,7 @@ for i in range(0,6):
 vnrbl_age = race.vnrbl_age
 vnrbl_age_mod = [-1,-1,-1,1,1,0]
 vnrbl_age_scores = old_age_scores.copy()
-for i in range(len(scores)):
+for i in range(0,6):
     if i == 4:
         vnrbl_age_scores[i] += vnrbl_age_mod[i]
         continue
@@ -108,17 +108,17 @@ for i in range(len(scores)):
     vnrbl_age_scores[i] += vnrbl_age_mod[i]
     vnrbl_age_scores[i] = max(low, min(high, vnrbl_age_scores[i]))
 # Applying Age Effect Modifiers
-if age >= mdl_age and age < old_age:
-    scores = tuple(mdl_age_scores)
-elif age >= old_age and age < vnrbl_age:
-    scores = tuple(old_age_scores)
-elif age >= vnrbl_age:
-    scores = tuple(vnrbl_age_scores)
-else:
-    scores = tuple(mod_scores)
+life_stages = [
+    (vnrbl_age, vnrbl_age_scores),
+    (old_age, old_age_scores),
+    (mdl_age, mdl_age_scores)
+]
+for threshold, stage_scores in life_stages:
+    if age >= threshold:
+        fnl_scores = stage_scores
+        break
 
-
-
+scores = tuple(fnl_scores)
 # Step 3: 
 
 

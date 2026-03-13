@@ -1,0 +1,11 @@
+--- HEROES CHARACTER SHEET ---
+
+Race: Half-Elf: 
+Sex: Female
+Age: 21.0 Years
+Weight: 109.0 lbs.
+Height: 68.0"
+Alignment:  Chaotic Good
+Stats: [ 11, 12, 11, 14, 18, 16 ]
+Power: 82 pts.
+Death: 157.0 Years

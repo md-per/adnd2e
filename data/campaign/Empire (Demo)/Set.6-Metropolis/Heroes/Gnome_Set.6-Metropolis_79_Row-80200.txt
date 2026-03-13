@@ -1,0 +1,11 @@
+--- HEROES CHARACTER SHEET ---
+
+Race: Gnome: 
+Sex: Female
+Age: 68.0 Years
+Weight: 82.0 lbs.
+Height: 42.0"
+Alignment:  Lawful Good
+Stats: [ 14, 12, 13, 18, 11, 11 ]
+Power: 79 pts.
+Death: 397.0 Years

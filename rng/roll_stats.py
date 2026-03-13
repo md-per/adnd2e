@@ -83,12 +83,14 @@ def mthd_10():
 
 # Method NPC - NOT FOR PLAYERS
 # This method is only used on the back end as a population/personality interpreter
-weights = {
-    mthd_1: 8000, mthd_9: 1000, mthd_7: 500, 
-    mthd_5: 250, mthd_2: 125, mthd_6: 60, 
-    mthd_8: 30, mthd_4: 15, mthd_10: 5
-}
+def mthd_zero():
+    return [((d6()+1)//2) + sum(d6() for _ in range(2)) for _ in range(6)]
 
+weights = {
+    mthd_zero: 8000, mthd_1: 1000, mthd_9: 500, mthd_7: 250, 
+    mthd_5: 125, mthd_2: 62, mthd_6: 31, 
+    mthd_8: 16, mthd_4: 8, mthd_10: 4
+}
 def mthd_npc():
     options = list(weights.keys())
     counts = list(weights.values())

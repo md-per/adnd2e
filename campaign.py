@@ -30,7 +30,7 @@ def main():
     if os.path.exists(path):
         df = pd.read_excel(path)
     else:
-        pop_size = rand.randint(5000, 1000000)
+        pop_size = rand.randint(5000, 1048575)
         print(f"Generating new kingdom with population: {pop_size}...")
         df = roll_npc.create_pop(pop_size, gen_name)
     #######################################################################
